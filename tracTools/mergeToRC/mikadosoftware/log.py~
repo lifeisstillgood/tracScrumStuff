@@ -1,0 +1,32 @@
+#!/usr/local/bin/python
+#! -*- coding: utf-8 -*-
+
+"""
+Trying to define standard locations etc for logging  and errors
+
+mikadosoftware/
+ /log
+ /error
+ 
+
+
+"""
+
+import Logging
+import os
+
+GENERICLOGLOCATION='/tmp'
+
+def getlogger(loghierarchy, logfilePath):
+    ''' loghierarchy - something like mikadosoftware.trac 
+    '''
+    L = logging.Logger(loghierarchy)
+    filepath = os.path.join(GENERICLOGLOCATION, loghierarchy + ".log")
+    fh = logging.FileHandler(filepath)
+    fmt = "%(name)s::%(levelname)s::%(pathname)s::%(lineno)d::%(asctime)s::%(message)s"
+    fm = logging.Formatter(fmt)
+
+    fh.setFormatter(fm)
+    L.addHandler(fh)
+    return L
+
